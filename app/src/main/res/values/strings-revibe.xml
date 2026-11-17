@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="revibe_intertune_credits_title">Thanks to the creators of InterTune</string>
+    <string name="revibe_intertune_credits_body">REVIBE is a modified project derived from InterTune. We thank ItzSkyeYT, author and maintainer of InterTune; Zion Huang (InnerTune); Michael Zh and Davide Garberi (OuterTune); and the other authors and contributors credited in the source. Copyright notices, the GPL-3.0-only license, and third-party notices remain in the source and documentation.</string>
+    <string name="revibe_source_code">InterTune project</string>
+    <string name="revibe_gpl_license">GPL-3.0 license</string>
+
+    <!-- First-open welcome experience -->
+    <string name="revibe_name">REVIBE</string>
+    <string name="revibe_welcome_title">Bem-vindo ao REVIBE.</string>
+    <string name="revibe_welcome_subtitle">A música acompanha momentos. O REVIBE foi criado para fazer parte deles.</string>
+    <string name="revibe_welcome_thanks">Obrigado por escolher o REVIBE. É um prazer ter você conosco. Esperamos que cada música torne sua experiência ainda mais especial.</string>
+    <string name="revibe_welcome_cta">Começar a ouvir</string>
+
+    <!-- Animations and effects settings -->
+    <string name="revibe_animations_title">Animações e efeitos</string>
+    <string name="revibe_animations_general_title">Animações gerais</string>
+    <string name="revibe_animations_general_description">Ativar ou desativar as animações de interface.</string>
+    <string name="revibe_animations_transitions_title">Transições entre telas</string>
+    <string name="revibe_animations_transitions_description">Ativar ou desativar movimentos de navegação.</string>
+    <string name="revibe_animations_micro_title">Microanimações</string>
+    <string name="revibe_animations_micro_description">Controlar os pequenos efeitos de botões, ícones e componentes.</string>
+    <string name="revibe_animations_player_title">Animações do player</string>
+    <string name="revibe_animations_player_description">Ativar ou desativar os movimentos decorativos do player e das capas.</string>
+    <string name="revibe_animations_welcome_title">Animações de boas-vindas</string>
+    <string name="revibe_animations_welcome_description">Ativar ou desativar a animação de apresentação.</string>
+    <string name="revibe_animations_reduce_title">Reduzir movimento</string>
+    <string name="revibe_animations_reduce_description">Reduzir significativamente os movimentos, mantendo apenas os feedbacks essenciais.</string>
+    <string name="revibe_animations_replay_title">Rever boas-vindas</string>
+    <string name="revibe_animations_replay_description">Mostrar novamente a apresentação de primeira abertura.</string>
+</resources>

@@ -1,0 +1,442 @@
+/*
+ * Copyright (C) 2024 z-huang/InnerTune
+ * Copyright (C) 2025 O‌ute‌rTu‌ne Project
+ *
+ * SPDX-License-Identifier: GPL-3.0
+ *
+ * For any other attributions, refer to the git commit history
+ */
+
+@file:Suppress("INVISIBLE_MEMBER")
+
+package com.dd3boh.outertune.ui.component
+
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.key.KeyEventType
+import android.annotation.SuppressLint
+import androidx.activity.compose.BackHandler
+import androidx.activity.compose.PredictiveBackHandler
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SearchBarColors
+import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.TextFieldColors
+import androidx.compose.material3.TopAppBarScrollBehavior
+import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.surfaceColorAtElevation
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.animation.core.Animatable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isSpecified
+import androidx.compose.ui.unit.lerp
+import androidx.compose.ui.util.lerp
+import com.dd3boh.outertune.constants.AppBarHeight
+import com.dd3boh.outertune.constants.BackAnimationsKey
+import com.dd3boh.outertune.utils.rememberPreference
+import kotlinx.coroutines.launch
+import kotlin.coroutines.cancellation.CancellationException
+import kotlin.math.max
+import kotlin.math.pow
+import kotlin.math.roundToInt
+
+// MotionTokens.EasingLegacyCubicBezier
+val easingLegacyCubicBezier = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.0f)
+
+// MotionTokens.DurationMedium2
+const val durationMedium2 = 300.0
+
+@SuppressLint("UnusedBoxWithConstraintsScope")
+@ExperimentalMaterial3Api
+@Composable
+fun SearchBar(
+    query: TextFieldValue,
+    onQueryChange: (TextFieldValue) -> Unit,
+    onSearch: (String) -> Unit,
+    active: Boolean,
+    onActiveChange: (Boolean) -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    shape: Shape = SearchBarDefaults.inputFieldShape,
+    colors: SearchBarColors = SearchBarDefaults.colors(),
+    tonalElevation: Dp = SearchBarDefaults.TonalElevation,
+    windowInsets: WindowInsets = WindowInsets.safeDrawing,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    focusRequester: FocusRequester = remember { FocusRequester() },
+    /**
+     * Applied to the pill itself rather than the band around it.
+     *
+     * The outer node is the full width of the screen and carries the status bar inset, so anything
+     * measuring from there measures a stripe across the top of the display. The tour cuts a hole
+     * out of whatever it is given, and a hole the width of the screen is not a highlight.
+     */
+    pillModifier: Modifier = Modifier,
+    /**
+     * The widest the pill is while shut, for a window where the whole width would stretch it: a
+     * phone on its side (Landscape.kt). It then sits in the middle of the room it has, and opens
+     * out from there to the whole screen as it always did. Unspecified is the whole width.
+     */
+    closedMaxWidth: Dp = Dp.Unspecified,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    val heightOffsetLimit = with(LocalDensity.current) {
+        -(AppBarHeight.toPx() + WindowInsets.systemBars.getTop(this))
+    }
+    SideEffect {
+        if (scrollBehavior.state.heightOffsetLimit != heightOffsetLimit) {
+            scrollBehavior.state.heightOffsetLimit = heightOffsetLimit
+        }
+    }
+
+    // How open the bar is, 0 shut and 1 full screen. This was an animateFloatAsState driven only
+    // by [active], which cannot serve predictive back: that gesture has to move the value by hand,
+    // frame by frame, and then hand it back to the animation from wherever the finger let go. A
+    // state that only ever animates towards a target would snap the bar back open on commit and
+    // then play the closing animation a second time.
+    val openness = remember { Animatable(if (active) 1f else 0f) }
+    val animationProgress: Float = openness.value
+    val searchBarScope = rememberCoroutineScope()
+
+    LaunchedEffect(active) {
+        openness.animateTo(
+            targetValue = if (active) 1f else 0f,
+            animationSpec = tween(
+                durationMillis = AnimationDurationMillis,
+                easing = easingLegacyCubicBezier,
+            ),
+        )
+    }
+
+    val defaultInputFieldShape = SearchBarDefaults.inputFieldShape
+    val defaultFullScreenShape = SearchBarDefaults.fullScreenShape
+    // Plain vals, not remembered derived state.
+    //
+    // Both of these used to be `remember { derivedStateOf { ... } }`. derivedStateOf re-runs when
+    // state read INSIDE its lambda changes, and animationProgress is read outside it, one line up:
+    // the lambda closed over a Float. With no keys on the remember it was computed once, at
+    // progress 0, and never again. So the shape stayed a shut pill forever, and the input field's
+    // padding stayed zero, which is why the open search bar rendered under the clock. The
+    // memoisation bought nothing either way, because reading openness.value recomposes this
+    // function on every frame of the animation regardless.
+    val animatedShape = when {
+        shape == defaultInputFieldShape -> {
+            // The shape can only be animated if it's the default spec value
+            val animatedRadius = SearchBarCornerRadius * (1 - animationProgress)
+            RoundedCornerShape(CornerSize(animatedRadius))
+        }
+
+        animationProgress == 1f -> defaultFullScreenShape
+        else -> shape
+    }
+
+    val topInset = windowInsets.asPaddingValues().calculateTopPadding()
+    val startInset = windowInsets.asPaddingValues().calculateStartPadding(LocalLayoutDirection.current)
+    val endInset = windowInsets.asPaddingValues().calculateEndPadding(LocalLayoutDirection.current)
+
+    val topPadding = SearchBarVerticalPadding + topInset
+    val animatedSurfaceTopPadding = lerp(topPadding, 0.dp, animationProgress)
+    val animatedInputFieldPadding = PaddingValues(
+        start = startInset * animationProgress,
+        top = topPadding * animationProgress,
+        end = endInset * animationProgress,
+        bottom = SearchBarVerticalPadding * animationProgress,
+    )
+
+    BoxWithConstraints(
+        modifier = modifier
+            .offset {
+                // Faded out as the bar opens. The offset is what lets the collapsed bar scroll
+                // away with the list, and its limit is the app bar height plus the status bar, so
+                // a list scrolled to the top of its range carried the full screen search up behind
+                // the clock the moment it was tapped: the field sat under the status bar and the
+                // first row under the field. Shut it is the whole offset, open it is none.
+                IntOffset(
+                    x = 0,
+                    y = (scrollBehavior.state.heightOffset * (1f - animationProgress)).roundToInt(),
+                )
+            },
+        propagateMinConstraints = true
+    ) {
+        val height: Dp
+        val width: Dp
+        val startPadding: Dp
+        val endPadding: Dp
+        with(LocalDensity.current) {
+            val startWidth = constraints.maxWidth.toFloat()
+            val startHeight = max(constraints.minHeight, InputFieldHeight.roundToPx())
+                .coerceAtMost(constraints.maxHeight)
+                .toFloat()
+            val endWidth = constraints.maxWidth.toFloat()
+            val endHeight = constraints.maxHeight.toFloat()
+
+            // What a capped pill leaves over, split between its two sides. Nothing when there
+            // is no cap, and the paddings below are then what they were.
+            val room = startWidth - (SearchBarHorizontalPadding * 2 + startInset + endInset).toPx()
+            val spare = if (closedMaxWidth.isSpecified) ((room - closedMaxWidth.toPx()) / 2f).coerceAtLeast(0f) else 0f
+
+            height = lerp(startHeight, endHeight, animationProgress).toDp()
+            width = lerp(startWidth, endWidth, animationProgress).toDp()
+            startPadding = lerp((SearchBarHorizontalPadding + startInset).roundToPx().toFloat() + spare, 0f, animationProgress).toDp()
+            endPadding = lerp((SearchBarHorizontalPadding + endInset).roundToPx().toFloat() + spare, 0f, animationProgress).toDp()
+        }
+
+        // Glass while it is a pill floating over the page, fading into the solid full screen search
+        // as it opens. Only the search bar beside the nav host is given any; see LocalSearchBarGlass.
+        val glass = LocalSearchBarGlass.current
+        Surface(
+            shape = animatedShape,
+            color = when {
+                glass != null -> MaterialTheme.colorScheme.surface.copy(alpha = animationProgress)
+                animationProgress > 0 -> MaterialTheme.colorScheme.surface
+                else -> MaterialTheme.colorScheme.surfaceColorAtElevation(6.dp)
+            },
+            contentColor = contentColorFor(colors.containerColor),
+            tonalElevation = tonalElevation,
+            modifier = pillModifier
+                .padding(
+                    top = animatedSurfaceTopPadding,
+                    start = startPadding,
+                    end = endPadding
+                )
+                .size(width = width, height = height)
+                .then(if (glass != null && animationProgress < 1f) Modifier.floatingGlass(glass, animatedShape) else Modifier)
+        ) {
+            Column {
+                SearchBarInputField(
+                    query = query,
+                    onQueryChange = onQueryChange,
+                    onSearch = onSearch,
+                    active = active,
+                    onActiveChange = onActiveChange,
+                    modifier = Modifier.padding(animatedInputFieldPadding),
+                    enabled = enabled,
+                    placeholder = placeholder,
+                    leadingIcon = leadingIcon,
+                    trailingIcon = trailingIcon,
+                    interactionSource = interactionSource,
+                    focusRequester = focusRequester,
+                )
+
+                if (animationProgress > 0) {
+                    Column(Modifier.alpha(animationProgress)) {
+                        HorizontalDivider(color = colors.dividerColor)
+                        content()
+                    }
+                }
+            }
+        }
+    }
+
+    val (backAnimations) = rememberPreference(BackAnimationsKey, defaultValue = true)
+
+    if (!backAnimations) {
+        BackHandler(enabled = active) { onActiveChange(false) }
+    } else PredictiveBackHandler(enabled = active) { progress ->
+        try {
+            progress.collect { event ->
+                // Same decelerating curve as the player sheet, so the two gestures that close a
+                // full screen surface answer the finger at the same rate.
+                val eased = 1f - (1f - event.progress).pow(2)
+                openness.snapTo(1f - eased)
+            }
+            // LaunchedEffect(active) picks the value up from here and carries it the rest of the
+            // way, so the bar never jumps back open to replay the close.
+            onActiveChange(false)
+        } catch (cancelled: CancellationException) {
+            // Launched rather than awaited. Whether the gesture's own coroutine is still live
+            // after a cancellation is an implementation detail of PredictiveBackHandler, and the
+            // bar must return home either way.
+            searchBarScope.launch {
+                openness.animateTo(
+                    targetValue = 1f,
+                    animationSpec = tween(
+                        durationMillis = AnimationDurationMillis,
+                        easing = easingLegacyCubicBezier,
+                    ),
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SearchBarInputField(
+    query: TextFieldValue,
+    onQueryChange: (TextFieldValue) -> Unit,
+    onSearch: (String) -> Unit,
+    active: Boolean,
+    onActiveChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    placeholder: @Composable (() -> Unit)? = null,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    colors: TextFieldColors = SearchBarDefaults.inputFieldColors(),
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    focusRequester: FocusRequester = remember { FocusRequester() },
+) {
+    val searchSemantics = "Search" // getString(Strings.SearchBarSearch) R.string.m3c_search_bar_search
+    val suggestionsAvailableSemantics = "Suggestions below" // getString(Strings.SuggestionsAvailable) R.string.m3c_suggestions_available
+    val textColor = LocalTextStyle.current.color.takeOrElse {
+        colors.focusedTextColor
+    }
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .height(InputFieldHeight)
+    ) {
+        if (leadingIcon != null) {
+            Spacer(Modifier.width(SearchBarIconOffsetX))
+            leadingIcon()
+        }
+
+        BasicTextField(
+            value = query,
+            onValueChange = onQueryChange,
+            modifier = Modifier
+                .weight(1f)
+                .focusRequester(focusRequester)
+                .pointerInput(Unit) {
+                    awaitEachGesture {
+                        // Must be PointerEventPass.Initial to observe events before the text field
+                        // consumes them in the Main pass
+                        awaitFirstDown(pass = PointerEventPass.Initial)
+                        val upEvent = waitForUpOrCancellation(pass = PointerEventPass.Initial)
+                        if (upEvent != null) {
+                            onActiveChange(true)
+                        }
+                    }
+                }
+                .semantics {
+                    contentDescription = searchSemantics
+                    if (active) {
+                        stateDescription = suggestionsAvailableSemantics
+                    }
+                }
+                .onKeyEvent {
+                    // The centre key opens the search the way a tap on the field does, since a
+                    // keypad has no tap. Some keypad phones send Enter from it instead, which on
+                    // the closed field ran a search for nothing; it opens the search too. The
+                    // centre key is not taken, so the field still brings up the keyboard.
+                    val centre = it.key == Key.DirectionCenter || it.key == Key.Enter || it.key == Key.NumPadEnter
+                    if (centre && !active) {
+                        if (it.type == KeyEventType.KeyUp) onActiveChange(true)
+                        return@onKeyEvent it.key != Key.DirectionCenter
+                    }
+                    if (it.key == Key.Enter) {
+                        onSearch(query.text)
+                        return@onKeyEvent true
+                    }
+                    false
+                },
+            enabled = enabled,
+            singleLine = true,
+            textStyle = LocalTextStyle.current.merge(TextStyle(color = textColor)),
+            cursorBrush = SolidColor(colors.cursorColor),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+            keyboardActions = KeyboardActions(onSearch = { onSearch(query.text) }),
+            interactionSource = interactionSource,
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier.fillMaxHeight(),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    if (placeholder != null && query.text.isEmpty()) {
+                        Box(Modifier.alpha(0.8f)) {
+                            placeholder()
+                        }
+                    }
+                    innerTextField()
+                }
+            }
+        )
+
+        if (trailingIcon != null) {
+            trailingIcon()
+            Spacer(Modifier.width(SearchBarIconOffsetX))
+        }
+    }
+}
+
+// Measurement specs
+val InputFieldHeight = 48.dp
+private val SearchBarCornerRadius: Dp = InputFieldHeight / 2
+internal val SearchBarMinWidth: Dp = 360.dp
+private val SearchBarMaxWidth: Dp = 720.dp
+internal val SearchBarVerticalPadding: Dp = 8.dp
+internal val SearchBarHorizontalPadding: Dp = 12.dp
+
+// Search bar has 16dp padding between icons and start/end, while by default text field has 12dp.
+val SearchBarIconOffsetX: Dp = 4.dp
+
+// Animation specs
+private const val AnimationDurationMillis: Int = durationMedium2.toInt()

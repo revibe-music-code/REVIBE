@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="revibe_intertune_credits_title">Agradecimentos aos criadores do InterTune</string>
+    <string name="revibe_intertune_credits_body">O REVIBE é um projeto derivado e modificado a partir do InterTune. Agradecemos a ItzSkyeYT, autor e mantenedor do InterTune; a Zion Huang (InnerTune); a Michael Zh e Davide Garberi (OuterTune); e aos demais autores e colaboradores creditados no código-fonte. Os avisos de copyright, a licença GPL-3.0-only e os créditos de terceiros permanecem no código-fonte e na documentação.</string>
+    <string name="revibe_source_code">Projeto InterTune</string>
+    <string name="revibe_gpl_license">Licença GPL-3.0</string>
+</resources>
