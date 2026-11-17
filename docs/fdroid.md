@@ -70,7 +70,7 @@ App name: REVIBE
 Package ID: app.revibe.music
 Source: https://github.com/revibe-music-code/REVIBE
 Issue tracker: https://github.com/revibe-music-code/REVIBE/issues
-Releases: https://github.com/revibe-music-code/REVIBE/releases (tagged vX.Y.Z; release builds not validated in this delivery)
+Releases: https://github.com/revibe-music-code/REVIBE/releases (no releases are published yet; release builds not validated in this delivery)
 License: GPL-3.0-only
 Categories: Multimedia
 Anti-Features: NonFreeNet

@@ -39,7 +39,7 @@ REVIBE has two modes for synced playlists, at Settings > Account and sync > Sync
 
 If you are already on read write and still cannot edit it, the playlist itself is probably not editable. Some YouTube Music playlists cannot be changed by you at all, for example the ones YouTube builds for you.
 
-For more about the different kinds of playlist, see [Music library](https://github.com/ItzSkyeYT/InterTune/wiki/Music-library#playlist-types).
+For more about the different kinds of playlist, see [Music library](https://github.com/revibe-music-code/REVIBE/blob/main/wiki/Music-library.md#playlist-types).
 
 ### Q: How do I scrobble music to LastFM, LibreFM, ListenBrainz or GNU FM?
 

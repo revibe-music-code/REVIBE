@@ -52,7 +52,7 @@ To import:
 1. Copy the files into your external download folder, or into a folder you have added under **Configure extra import locations…**. Subfolders are included, so you can keep them organised.
 2. Go to Settings > Storage > Advanced and tap **Rescan download folders…**.
 
-This system links files to songs REVIBE already knows about. If what you actually want is to add a whole folder of music to your library, you want the local media scanner instead. See [Local Media](https://github.com/ItzSkyeYT/InterTune/wiki/Local-Media).
+This system links files to songs REVIBE already knows about. If what you actually want is to add a whole folder of music to your library, you want the local media scanner instead. See [Local Media](https://github.com/revibe-music-code/REVIBE/blob/main/wiki/Local-Media.md).
 
 ### If a file does not show up as downloaded
 

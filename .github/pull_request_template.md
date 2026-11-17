@@ -32,8 +32,8 @@ landscape work were invisible in a still.
 
 ## Built and tested
 
-<!-- Building it and running it is the one thing genuinely required. Build setup is in the README
-of this REVIBE repository: https://github.com/revibe-music-code/REVIBE#building -->
+<!-- Building it and running it is the one thing genuinely required. Build setup is in
+https://github.com/revibe-music-code/REVIBE/blob/main/docs/BUILDING.md -->
 
 - Device and Android version:
 - Variant built: <!-- coreDebug, coreRelease, fullDebug, ... -->

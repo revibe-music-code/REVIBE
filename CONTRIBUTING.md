@@ -41,7 +41,7 @@ credited as the base, not as REVIBE's support channel.
 
 Found something broken? Open an [issue](https://github.com/revibe-music-code/REVIBE/issues/new/choose) **in this REVIBE repository** with the bug form, or use the REVIBE contact channel (`suporte.revibe@gmail.com / Discord: https://discord.gg/b9ybveZRs7`). In the app, Settings > About > Submit a bug report shows the last thing that went wrong, ready to copy into the report. Reports sent to the original projects are not REVIBE support requests.
 
-Everyone who reports issues is thanked in the [README](https://github.com/revibe-music-code/REVIBE#people). Thank you!
+Everyone who reports issues helps make REVIBE better. Thank you!
 
 ## Translations
 

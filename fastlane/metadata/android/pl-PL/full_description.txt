@@ -1,4 +1,4 @@
-<p><i>REVIBE</i> to fork projektu <a href="https://github.com">OuterTune</a>, który sam jest forkiem <a href="https://github.com">InnerTune</a>. Działa zarówno jako lokalny odtwarzacz multimediów, jak i klient YouTube Music.</p>
+<p><i>REVIBE</i> to fork projektu <a href="https://github.com/OuterTune/OuterTune">OuterTune</a>, który sam jest forkiem <a href="https://github.com/z-huang/InnerTune">InnerTune</a>. Działa zarówno jako lokalny odtwarzacz multimediów, jak i klient YouTube Music.</p>
 
 <p><br><b>Funkcje:</b></p>
 <ul>
@@ -36,7 +36,7 @@
 <p><br><b>Uwaga:</b></p>
 <ul>
 <li>Wymaga Androida 7.0 lub nowszego.</li>
-<li>Coś nie działa? Zgłoś błąd w aplikacji (Ustawienia -&gt; O info -&gt; Prześlij raport o błędzie) lub na <a href="https://github.com">GitHubie</a>.</li>
+<li>Coś nie działa? Zgłoś błąd w aplikacji (Ustawienia -&gt; O info -&gt; Prześlij raport o błędzie) lub na <a href="https://github.com/revibe-music-code/REVIBE/issues">GitHubie</a>.</li>
 </ul>
 
 <p><br>REVIBE nie jest powiązane, sponsorowane ani wspierane przez Google lub YouTube.</p>

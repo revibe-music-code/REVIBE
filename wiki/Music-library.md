@@ -19,7 +19,7 @@ Each kind has its own icon in the list:
 
 A local playlist lives only inside REVIBE. YouTube Music never sees it, and nothing you do to it touches your account. Everything works here: rename it, drag songs into a new order, add songs, remove songs. Dragging needs the sort set to "Custom order" and the padlock button next to the sort open, which it is until you tap it shut.
 
-It is also the only kind of playlist that can hold [local files](https://github.com/ItzSkyeYT/InterTune/wiki/Local-Media), meaning music already stored on your phone rather than streamed.
+It is also the only kind of playlist that can hold [local files](https://github.com/revibe-music-code/REVIBE/blob/main/wiki/Local-Media.md), meaning music already stored on your phone rather than streamed.
 
 To make one, tap the three dots next to the playlist count on the Playlists screen and pick "Create playlist". If you are signed in, that dialog has a "Sync Playlist" switch. Leave it off and you get a local playlist. The switch cannot be changed afterwards, as the dialog warns ("This is NOT changeable later"), so decide before you tap done. If you are not signed in, every playlist you make is a local one.
 

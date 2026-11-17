@@ -45,7 +45,7 @@ It is off, and it is hidden. Go to Settings > Experimental, scroll down to the D
 
 Skip silence stops working while offload is actually in use, because the part of the player that removes the quiet bits gets bypassed. Audio normalization is not affected and keeps working either way.
 
-Read [Audio offload](https://github.com/ItzSkyeYT/InterTune/wiki/Audio-offload) before you switch it on. That page lists what goes wrong and on which phones.
+Read [Audio offload](https://github.com/revibe-music-code/REVIBE/blob/main/wiki/Audio-offload.md) before you switch it on. That page lists what goes wrong and on which phones.
 
 ## Saving data
 

@@ -3,7 +3,7 @@
 **REVIBE — “Feel the music again.”**  
 Projeto modificado em 17/11/2026.
 
-Este arquivo complementa o arquivo [`LICENSE`](LICENSE), que contém a íntegra da **GNU General Public License v3**. Ele registra a origem do código, as modificações feitas no fork e os avisos de terceiros conhecidos. Ele **não substitui** a licença nem os avisos de copyright mantidos nos arquivos-fonte.
+Este arquivo complementa o arquivo [`LICENSE`](https://github.com/revibe-music-code/REVIBE/blob/main/LICENSE), que contém a íntegra da **GNU General Public License v3**. Ele registra a origem do código, as modificações feitas no fork e os avisos de terceiros conhecidos. Ele **não substitui** a licença nem os avisos de copyright mantidos nos arquivos-fonte.
 
 ## 1. Natureza do projeto
 

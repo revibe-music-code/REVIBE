@@ -36,7 +36,8 @@
 <p><br><b>Notice:</b></p>
 <ul>
 <li>Android 7.0 or later.</li>
-<li>Something not working? Please report it, from the app (Settings, About, Submit a bug report) or <a href="URL_DO_REPOSITORIO_REVIBE/issues">in this repository's issue tracker</a>.</li>
+<li>Something not working? Please report it, from the app (Settings, About, Submit a bug report) or <a href="https://github.com/revibe-music-code/REVIBE/issues">in this repository's issue tracker</a>.</li>
+<li>Credits and third-party notices: <a href="https://github.com/revibe-music-code/REVIBE/blob/main/NOTICE.md">NOTICE.md</a>. Licence: <a href="https://github.com/revibe-music-code/REVIBE/blob/main/LICENSE">GPL-3.0-only</a>.</li>
 </ul>
 
 <p><br>REVIBE is not affiliated with, sponsored by, or endorsed by Google or YouTube.</p>

@@ -52,7 +52,7 @@ If you specifically get "Sign in to confirm you're not a bot", there is a last r
 - **The song must already exist in the app.** Importing links a file to a song the app already knows about, so if the song has never been played or added to a playlist there is nothing to link it to. Search for the songs, add them to a playlist, play that playlist once, then rescan.
 - **`Clear all downloads` only removes internal downloads.** Anything in your external download folder or an extra import folder has to go by hand, either from the song's menu or with a file manager. That is deliberate, so nobody wipes a whole folder by accident.
 
-There is more detail on the three kinds of download folder in [Downloading songs](https://github.com/ItzSkyeYT/InterTune/wiki/Downloading-Songs).
+There is more detail on the three kinds of download folder in [Downloading songs](https://github.com/revibe-music-code/REVIBE/blob/main/wiki/Downloading-Songs.md).
 
 ## Local files are missing after a scan
 
@@ -66,7 +66,7 @@ There is more detail on the three kinds of download folder in [Downloading songs
 - **Two songs merged into one, or one song appearing twice?** That is the matching rules. `Settings > Local media > Additional scanner settings > Configure scanner sensitivity` decides what counts as the same song, and "Match title and artists" is the default. Turn on **Strict file names** if you keep the same song in more than one format. Then rescan with the rescan box ticked.
 - **`Scan automatically` is not instant.** It runs when you open the app, and at most about once every eleven hours. If you just copied music over, run the scan yourself with the **Scan** button in `Settings > Local media`.
 
-More on scanning is in [Local media](https://github.com/ItzSkyeYT/InterTune/wiki/Local-Media).
+More on scanning is in [Local media](https://github.com/revibe-music-code/REVIBE/blob/main/wiki/Local-Media.md).
 
 ## The app looks wrong after an update
 
@@ -78,7 +78,7 @@ More on scanning is in [Local media](https://github.com/ItzSkyeYT/InterTune/wiki
 
 ## Reporting a bug
 
-Report it at **https://github.com/revibe-music-code/REVIBE/issues**, or from inside the app at `Settings > About > Submit a bug report (Via GitHub)`, which opens the same page. For questions rather than bugs, `Settings > About > Help and support (Via GitHub)` opens the discussions page instead.
+Report it at **https://github.com/revibe-music-code/REVIBE/issues**, or from inside the app at `Settings > About > Submit a bug report (Via GitHub)`, which collects the log to paste into the report. For questions rather than bugs, use the REVIBE Discord (<https://discord.gg/b9ybveZRs7>) or email `suporte.revibe@gmail.com`.
 
 Please do not report REVIBE bugs to OuterTune. Upstream did not build this app and cannot fix it. If you can reproduce exactly the same thing on plain OuterTune, then it is genuinely their bug and belongs on [their tracker](https://github.com/OuterTune/OuterTune/issues) instead.
 

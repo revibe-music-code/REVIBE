@@ -17,7 +17,7 @@ You can change your mind at any point. Go to Settings > Updates and use the swit
 
 Each time you open REVIBE it asks GitHub about the newest REVIBE release. It will not do this more than once every six hours, so opening the app ten times in an afternoon still only means one check.
 
-It looks at REVIBE's own releases at [github.com/ItzSkyeYT/REVIBE](https://github.com/ItzSkyeYT/InterTune). It does not look at [OuterTune](https://github.com/OuterTune/OuterTune), the project REVIBE was forked from. Releases marked as a draft or a pre-release are skipped, so half finished test builds are never offered to you.
+It looks at REVIBE's own releases at [github.com/revibe-music-code/REVIBE](https://github.com/revibe-music-code/REVIBE). It does not look at [OuterTune](https://github.com/OuterTune/OuterTune), the project REVIBE was forked from. Releases marked as a draft or a pre-release are skipped, so half finished test builds are never offered to you.
 
 If the check fails, because your phone is offline or GitHub is having a bad day, the app says nothing at all. It also does not count that as a check, so it just tries again next time you open the app.
 

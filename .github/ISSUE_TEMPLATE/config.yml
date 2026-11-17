@@ -1,12 +1,12 @@
 blank_issues_enabled: false
 contact_links:
   - name: A question, or you are not sure it is a bug
-    url: https://github.com/revibe-music-code/REVIBE/discussions
-    about: "Ask in Discussions instead. Nothing gets closed for being in the wrong place, but questions are easier to answer there, other people can answer them, and the answers stay findable."
+    url: https://discord.gg/b9ybveZRs7
+    about: "Ask on the REVIBE Discord instead. Questions are easier to answer there, other people can help too, and this repository has no Discussions section."
 
   - name: Playback stops partway through every track on upstream OuterTune
-    url: https://github.com/revibe-music-code/REVIBE/releases/latest
-    about: "That is the known upstream bug REVIBE was made to fix, and it needs no issue: install REVIBE, which sits alongside OuterTune rather than replacing it. If it happens on REVIBE itself, that is new and I want the report, so open a bug and say so."
+    url: https://github.com/revibe-music-code/REVIBE/blob/main/docs/BUILDING.md
+    about: "That is the known upstream bug REVIBE was made to fix, and it needs no issue: build REVIBE from source, which sits alongside OuterTune rather than replacing it. No APK is published in this repository yet. If it happens on REVIBE itself, that is new and I want the report, so open a bug and say so."
 
   - name: A translation reads wrong in your language
     url: https://github.com/revibe-music-code/REVIBE/issues/new?template=translation_report.yml

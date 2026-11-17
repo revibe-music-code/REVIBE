@@ -34,7 +34,7 @@ The switch in the top right of the dialog flips it between two lists:
 
 You can exclude a folder that sits inside a folder you included. The other way round does not work, so you cannot include a folder that sits inside one you excluded.
 
-A scan folder cannot be your download folder or one of your extra import folders, and it cannot be anything inside them either. Pick one of those and the folder turns red in the list and the OK button stops working. If you pick the download folder itself, the app also explains why: "Invalid selection. A scan folder cannot be a subdirectory of the download folder, or the download folder itself". Downloads are handled separately, see [Downloading Songs](https://github.com/ItzSkyeYT/InterTune/wiki/Downloading-Songs).
+A scan folder cannot be your download folder or one of your extra import folders, and it cannot be anything inside them either. Pick one of those and the folder turns red in the list and the OK button stops working. If you pick the download folder itself, the app also explains why: "Invalid selection. A scan folder cannot be a subdirectory of the download folder, or the download folder itself". Downloads are handled separately, see [Downloading Songs](https://github.com/revibe-music-code/REVIBE/blob/main/wiki/Downloading-Songs.md).
 
 Two things are skipped on purpose, and they are the usual reason music goes missing:
 
@@ -102,4 +102,4 @@ If you want to build the app yourself, or with your own set of FFmpeg libraries,
 
 ---
 
-Something not behaving as described here? Open an issue at [ItzSkyeYT/REVIBE](https://github.com/revibe-music-code/REVIBE/issues). This is a personal fork, so replies come on a hobby schedule.
+Something not behaving as described here? Open an issue at [REVIBE](https://github.com/revibe-music-code/REVIBE/issues). This is a personal fork, so replies come on a hobby schedule.

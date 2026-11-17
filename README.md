@@ -2,7 +2,7 @@
 
 **Feel the music again.**
 
-[![License: GPL-3.0-only](https://img.shields.io/badge/License-GPL--3.0--only-blue.svg)](LICENSE)
+[![License: GPL-3.0-only](https://img.shields.io/badge/License-GPL--3.0--only-blue.svg)](https://github.com/revibe-music-code/REVIBE/blob/main/LICENSE)
 
 REVIBE é um aplicativo Android **independente e derivado**, reconstruído sobre a base Kotlin/Jetpack Compose do [InterTune](https://github.com/ItzSkyeYT/InterTune), que por sua vez deriva de [InnerTune](https://github.com/z-huang/InnerTune) e [OuterTune](https://github.com/OuterTune/OuterTune). A proposta é oferecer uma experiência de biblioteca musical local e online com identidade própria — tema escuro preto/grafite, violeta/lilás, superfícies *Liquid Glass*, animações centralizadas e uma apresentação de primeira abertura — preservando a arquitetura e os recursos do trabalho original.
 
@@ -34,9 +34,9 @@ A disponibilidade de fontes remotas depende do serviço correspondente, da confi
 
 ## Licença e créditos
 
-REVIBE e o código herdado são distribuídos sob **GPL-3.0-only**. O texto integral está em [LICENSE](LICENSE). Os avisos de copyright, os cabeçalhos `SPDX-License-Identifier: GPL-3.0` e os créditos da interface **Sobre → Atribuição** foram preservados.
+REVIBE e o código herdado são distribuídos sob **GPL-3.0-only**. O texto integral está em [LICENSE](https://github.com/revibe-music-code/REVIBE/blob/main/LICENSE). Os avisos de copyright, os cabeçalhos `SPDX-License-Identifier: GPL-3.0` e os créditos da interface **Sobre → Atribuição** foram preservados.
 
-A consolidação de atribuições e licenças de terceiros está em [NOTICE.md](NOTICE.md). O README completo do projeto base foi mantido como referência histórica em [docs/INTERTUNE_README_UPSTREAM.md](docs/INTERTUNE_README_UPSTREAM.md).
+A consolidação de atribuições e licenças de terceiros está em [NOTICE.md](https://github.com/revibe-music-code/REVIBE/blob/main/NOTICE.md). O README completo do projeto base foi mantido como referência histórica em [docs/INTERTUNE_README_UPSTREAM.md](docs/INTERTUNE_README_UPSTREAM.md).
 
 Créditos preservados:
 
@@ -106,6 +106,6 @@ Contribuições de tradução serão disponibilizadas futuramente, quando houver
 - [docs/REVIBE.md](docs/REVIBE.md) — notas técnicas sobre a reorganização do fork;
 - [docs/TEST_REPORT.md](docs/TEST_REPORT.md) — evidências e limitações da validação;
 - [docs/BUILDING.md](docs/BUILDING.md) — guia de build herdado ajustado ao REVIBE;
-- [NOTICE.md](NOTICE.md) — atribuições e licenças de terceiros;
+- [NOTICE.md](https://github.com/revibe-music-code/REVIBE/blob/main/NOTICE.md) — atribuições e licenças de terceiros;
 - [Modules.md](Modules.md) — origem de componentes incluídos no código;
 - [docs/INTERTUNE_README_UPSTREAM.md](docs/INTERTUNE_README_UPSTREAM.md) — README original preservado como referência.
