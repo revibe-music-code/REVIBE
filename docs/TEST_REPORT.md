@@ -1,51 +1,64 @@
 # REVIBE — relatório de testes e pendências
 
 **Data:** 17 de novembro de 2026  
-**Resultado geral:** validação estática parcial. Nenhum APK foi compilado, instalado ou executado.
+**Resultado geral:** `CoreDebug` e `FullDebug` compilaram com sucesso a partir de um **clone limpo simulado**. Os 38 testes críticos passaram. A execução em emulador cobriu `CoreDebug`. Build types `release`, `preview` e `userdebug` permanecem **não validados nesta entrega**.
 
-## Ambiente observado
+> Esta revisão substitui o registro anterior, que afirmava que nada havia sido compilado ou executado, pelos resultados efetivamente obtidos na validação posterior.
 
-- Host sandbox: Linux ARM64 (`aarch64`).
-- JDK disponível: OpenJDK 21.0.13.
-- `ANDROID_HOME` e `ANDROID_SDK_ROOT` não definidos; nenhum Android SDK encontrado nos diretórios verificados; `sdkmanager` não está instalado.
-- O apt desta imagem oferece Android platform 23 e build-tools 29, insuficientes para o projeto, que declara `compileSdk=36`. Não foi localizado pacote API 36 nem SDK Manager no repositório configurado.
-- Não há keystore de release no projeto. Nenhum aparelho Android ou emulador foi usado; não houve teste num Samsung Galaxy S23 Ultra.
+## Clone limpo simulado
 
-## Verificações executadas
+O conteúdo preparado para publicação foi exportado do índice Git para um diretório separado, sem `local.properties`, sem builds locais e sem os documentos internos removidos do índice. Foram configurados `JAVA_HOME`, `ANDROID_HOME`/`ANDROID_SDK_ROOT`; nenhum `git submodule` foi necessário. Para `FullDebug`, as bibliotecas nativas do FFmpeg foram obtidas separadamente em `ffMetadataEx/ffmpeg-android-maker/output/lib`, conforme documentado no README do módulo.
 
-| Verificação | Resultado | Evidência/limite |
+## Validação executada
+
+| Verificação | Resultado | Evidência |
 |---|---|---|
-| Inspeção da árvore Kotlin/Compose, módulos, manifests, busca e configuração Gradle | Parcialmente concluída | Leitura e busca estática de arquivos; sem compilador Android. |
-| Parsing dos XML Android | **Passou** | Python `xml.etree.ElementTree` analisou 179 XML em `app/src`; zero erros de sintaxe. Não substitui AAPT2/Android resource linking. |
-| Identificador e authorities da busca por variante | Conferidos estaticamente | `app.revibe.music`, `app.revibe.music.debug` e `app.revibe.music.preview`; o teste-fonte `SystemSearchTest` foi atualizado, mas não executado. |
-| Guard `BuiltInKeys.official` | Conferido estaticamente | Mantém o gate do upstream; pacote REVIBE não se identifica como build oficial do InterTune. |
-| Fontes de submódulos ausentes no ZIP | Recuperadas | Repostas a partir do commit upstream `a3015d9d831abdb8f1165d715eb39e7ddf7b9eab` e respectivas referências recursivas, listadas em `docs/REVIBE.md`. |
-| Build Debug (`:app:assembleDebug`) | **Bloqueado** | Gradle falhou antes da compilação: `SDK location not found`. |
-| Build core Debug após recuperação dos submódulos (`:app:assembleCoreDebug`) | **Bloqueado** | Gradle falhou durante a configuração de `:ffMetadataEx`, também por `SDK location not found`. Não chegou a compilar código Android. |
-| Testes unitários | **Não executados** | Dependem da configuração Android/Gradle; não se afirma que passaram. |
-| Instalação/abertura/navegação | **Não executadas** | Sem APK usado em device ou emulador. |
-| Busca musical remota, latência, conversão e paginação reais | **Não executadas** | Apenas mudanças estáticas no ViewModel/UI; fonte de rede não exercitada. |
-| Reprodução real, pausa/retomada, próxima/anterior, segundo plano, MediaSession/notificação/lockscreen | **Não executadas** | Sem build/dispositivo; nenhum stream reproduzido nesta sessão. |
-| Favoritos, playlists, histórico, letras e persistência | **Não executadas** | Requerem execução do app e/ou ambiente de teste Android. |
-| APK Debug | **Não gerado** | As compilações pararam por falta do SDK. |
-| APK Release assinado | **Não gerado** | Além do SDK ausente, não há `keystore.properties` nem keystore de assinatura. |
+| `:app:assembleCoreDebug` em clone limpo | **BUILD SUCCESSFUL** | 89 tarefas executadas; pacote `app.revibe.music.debug`. |
+| `:app:testCoreDebugUnitTest` em clone limpo | **BUILD SUCCESSFUL** | `SettingsIndexTest` (12), `AnimationsTest` (9), `SettingsTwoPaneTest` (17): **38/38**, 0 falhas, 0 erros. |
+| `LocalMatchProbe` | **Compilou e ficou skipado** | 1 teste, 0 falhas, 0 erros, 1 skipped; `LOCAL_MATCH` não foi habilitado. O fonte não contém caminhos de biblioteca pessoal. |
+| `:app:assembleFullDebug` em clone limpo | **BUILD SUCCESSFUL** | 120 tarefas, 84 executadas; `:ffMetadataEx`, CMake e as 4 ABIs compilaram com as libs FFmpeg externas. |
+| APK `CoreDebug` | **Gerado** | `app/build/outputs/apk/core/debug/REVIBE-0.12.11-core-debug-103.apk` — artefato local de validação, não publicado. |
+| Execução em emulador Android API 37 | **OK** | Apresentação de primeira abertura exibida; switches de animações persistentes após force-stop/relançamento; “Rever boas-vindas” com replay funcional. |
+| Logs do dispositivo | **Sem crashes fatais** | `FATAL_EXCEPTIONS=0` nos fluxos exercitados. |
+
+Comandos principais (com `<JAVA_HOME>` e `<ANDROID_SDK>` configurados):
+
+```bash
+./gradlew :app:assembleCoreDebug --no-daemon --max-workers=2 -DskipFormatKtlint
+./gradlew :app:testCoreDebugUnitTest \
+  --tests 'com.dd3boh.outertune.ui.screens.settings.SettingsIndexTest' \
+  --tests 'com.dd3boh.outertune.ui.utils.AnimationsTest' \
+  --tests 'com.dd3boh.outertune.ui.screens.settings.SettingsTwoPaneTest' \
+  --tests 'com.dd3boh.outertune.recognition.LocalMatchProbe' \
+  --no-daemon --max-workers=2 -DskipFormatKtlint
+./gradlew :app:assembleFullDebug --no-daemon --max-workers=2 -DskipFormatKtlint
+```
+
+## Não validado nesta entrega
+
+- Build types `release`, `preview` e `userdebug`: **não compilados, não testados e não instalados**.
+- Assinatura de release, publicação em loja e APK Release assinado: **não validados**.
+- Instalação/execução do flavor `full` em emulador ou aparelho: **não executada** — apenas compilação.
+- Busca musical remota real, latência, concorrência, cancelamento e paginação com provedor externo: **não exercitados**.
+- Reprodução com fonte remota autenticada, medição de performance e inspeção visual de pixels/screenshots: **não executadas**.
+- Compatibilidade em aparelhos físicos (por exemplo, Galaxy S23 Ultra) e em modelos mais modestos: **não avaliada**; a validação em dispositivo foi feita em emulador Android API 37.
+
+## Registro anterior, substituído por validação posterior
+
+Este documento registrava antes apenas uma inspeção estática em host Linux ARM64 sem Android SDK configurado, com build bloqueado por `SDK location not found`. Esse registro **não descreve a validação final** e foi substituído pelas evidências acima. Verificações estáticas antigas (parsing de XML e leitura de fontes, por exemplo) permanecem válidas como inspeção, mas não substituem compilação, testes ou execução.
 
 ## Problemas restantes e riscos
 
-1. **Build:** ainda é necessário configurar JDK 21, Android SDK API 36, NDK `29.0.13113456`, CMake `3.31.6`, aceitar licenças e executar assemble/testes. O erro concreto foi a ausência do Android SDK; não há evidência de que o código Kotlin ou o resource linking compile após as alterações.
-2. **Reprodução:** a causa da mensagem “Erro desconhecido” não pôde ser reproduzida nem isolada. O pipeline Media3 herdado foi preservado; nenhuma correção de reprodução é declarada como concluída.
-3. **Busca:** histórico, falhas e retry receberam mudanças estáticas, mas faltam testes de latência, concorrência, cancelamento e rede real. Sugestões dependem da fonte remota.
+1. **Build types:** a validação cobriu `CoreDebug` e `FullDebug`; `release`, `preview` e `userdebug` exigem verificação separada antes de qualquer afirmação de prontidão.
+2. **Reprodução:** a causa da mensagem “Erro desconhecido” não foi isolada. O pipeline Media3 herdado foi preservado; nenhuma correção de reprodução é declarada como concluída apenas com base nos fluxos exercitados no emulador.
+3. **Busca:** histórico, falhas e retry receberam mudanças estáticas; faltam testes com rede real.
 4. **Integrações:** serviços e acesso a streams dependem de disponibilidade e condições dos respectivos provedores. `BuiltInKeys.official` mantém desativadas no fork as credenciais e integrações reservadas ao upstream; o REVIBE não deve apresentá-las como próprias.
-5. **Compatibilidade/desempenho:** Liquid Glass, navegação adaptativa, acessibilidade e consumo de memória precisam ser avaliados em aparelho real, especialmente no Galaxy S23 Ultra e também em modelos Android mais modestos.
-6. **Distribuição:** não há APK, assinatura, screenshots ou validação de instalação. A publicação exige conferir GPL-3.0-only, créditos de terceiros, fonte correspondente ao binário e uma chave própria caso se deseje APK Release assinado.
+5. **Distribuição:** a publicação exige conferir GPL-3.0-only, créditos de terceiros, fonte correspondente ao binário e uma chave própria caso se deseje APK Release assinado.
+6. **Identidade técnica:** `applicationId` é `app.revibe.music` (`app.revibe.music.debug` em debug e `app.revibe.music.preview` em preview); o namespace `com.dd3boh.outertune` permanece por compatibilidade.
 
-## Comandos para completar a validação
+## Próximos passos
 
-```bash
-# Com JDK 21, SDK API 36, NDK/CMake exigidos configurados
-./gradlew :app:testCoreDebugUnitTest
-./gradlew :app:assembleCoreDebug
-./gradlew :app:assembleCoreRelease
-```
-
-Uma compilação futura não encerra a validação: executar os fluxos descritos em `docs/REVIBE.md` em dispositivo real e atualizar este relatório com versões, aparelho, passos e resultados observados.
+1. Validar separadamente `release`, `preview` e `userdebug`, registrando comandos, resultados e artefatos.
+2. Instalar e exercitar o flavor `full` em emulador/aparelho.
+3. Executar os fluxos de reprodução e busca com fonte remota autenticada.
+4. Avaliar em aparelho físico e atualizar este relatório com versão, aparelho, passos e resultados observados.

@@ -161,8 +161,9 @@ body:
         around it below. For a crash, `adb logcat -b crash` alone is usually the whole story.
 
         If the app is already running and you want only its lines, and you are in bash or zsh:
-        `adb logcat --pid=$(adb shell pidof -s dev.skye.REVIBE)`. The package is
-        `dev.skye.REVIBE.debug` if you built it yourself in debug.
+        `adb logcat --pid=$(adb shell pidof -s app.revibe.music.debug)`. The package for a release
+        build is `app.revibe.music`, and `app.revibe.music.preview` for preview; use those in the
+        command when that is the build you are testing.
 
         **Phone only.** [LogFox](https://f-droid.org/packages/com.f0x1d.logfox/) can do it, but
         reading another app's log needs the `READ_LOGS` permission, which still has to be granted
@@ -189,7 +190,7 @@ body:
     attributes:
       label: Before you submit
       options:
-        - label: I looked through the [existing issues](https://github.com/ItzSkyeYT/InterTune/issues?q=is%3Aissue) and this is not already one of them
+        - label: I looked through the [existing issues](https://github.com/revibe-music-code/REVIBE/issues?q=is%3Aissue) in this REVIBE repository and this is not already one of them
           required: true
         - label: This is one bug. If I have two, I will file two.
           required: true

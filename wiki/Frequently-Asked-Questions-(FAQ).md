@@ -12,7 +12,7 @@ REVIBE adds another client, an Apple Vision Pro headset. YouTube does not demand
 
 Upstream OuterTune still has this. They stopped supporting YouTube Music in February 2026 and marked the error Won't Fix. Their tracking issue is [OuterTune#735](https://github.com/OuterTune/OuterTune/issues/735), which is on upstream's own tracker, not this fork's.
 
-If you are on REVIBE and still see this, please report it at [REVIBE issues](https://github.com/ItzSkyeYT/InterTune/issues) and say which song it was and what Settings > Player and audio > Audio quality is set to. REVIBE is a one person hobby fork, so a reply may take a while.
+If you are on REVIBE and still see this, please report it at [REVIBE issues](https://github.com/revibe-music-code/REVIBE/issues) and say which song it was and what Settings > Player and audio > Audio quality is set to. REVIBE is a one person hobby fork, so a reply may take a while.
 
 ### Q: I get "Sign in to confirm you're not a bot"
 

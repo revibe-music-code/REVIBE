@@ -59,4 +59,4 @@ Two things to be aware of:
 
 ## Which version am I running?
 
-Settings > Updates, at the bottom, under the heading "Application information". The row is called "Installed version" and shows the version name with a number in brackets after it, like 0.10.2 (79). The number in brackets is the build number, and that is the one the update check actually compares. Quote both if you are reporting a problem at [github.com/ItzSkyeYT/REVIBE/issues](https://github.com/ItzSkyeYT/InterTune/issues).
+Settings > Updates, at the bottom, under the heading "Application information". The row is called "Installed version" and shows the version name with a number in brackets after it, like 0.10.2 (79). The number in brackets is the build number, and that is the one the update check actually compares. Quote both if you are reporting a problem at [https://github.com/revibe-music-code/REVIBE/issues](https://github.com/revibe-music-code/REVIBE/issues).

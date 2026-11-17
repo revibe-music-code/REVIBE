@@ -23,7 +23,7 @@
 | `app/src/main/java/com/dd3boh/outertune/ui/component/WhyStoppedNote.kt` | Cartões de erro, rede, login, região e proxy com `RevibeCard`. |
 | `app/src/main/java/com/dd3boh/outertune/ui/screens/settings/AboutScreen.kt` | Cabeçalho de identidade REVIBE e bloco de créditos reforçado, com todos os links e licenças preservados. |
 
-> `local.properties` foi criado na pasta temporária apenas para apontar o SDK (`C:\Android\Sdk`); não é uma alteração de código nem deve ser versionado.
+> `local.properties` foi criado no diretório de trabalho (`<REPO_ROOT>`) apenas para apontar o SDK (`<ANDROID_SDK>`); não é uma alteração de código nem deve ser versionado.
 
 ---
 
@@ -71,7 +71,7 @@
 | Problema | Correção |
 |---|---|
 | `RevibeTokens.Shapes.Small` referenciado no mini player mas ausente | Token `Small = RoundedCornerShape(12.dp)` adicionado ao sistema de design. |
-| Pasta temporária sem `local.properties` | Copiado o `sdk.dir=C\:\\Android\\Sdk` do checkout de Downloads (somente para build). |
+| Diretório de trabalho sem `local.properties` | Configurado `sdk.dir=<ANDROID_SDK>` a partir do checkout local em `<REPO_ROOT>` (somente para build). |
 | Primeira build falhou por `Unresolved reference 'Small'` | Corrigido; build seguinte passou. |
 | Segunda build encerrou sem mensagem enquanto o emulador consumia memória | Reexecutada com `--max-workers=2` e sem emulador ativo → sucesso. |
 | Avisos preexistentes de depreciação (Compose/Media3/coroutines) | Não alterados: não são regressões desta reformulação. |
@@ -84,7 +84,7 @@
 ## 6. Resultado da compilação e validação em dispositivo
 
 ```
-$env:JAVA_HOME = JDK 21
+$env:JAVA_HOME = '<JAVA_HOME>' (JDK 21)
 .\gradlew.bat :app:assembleCoreDebug --no-daemon --max-workers=2 -DskipFormatKtlint
 
 BUILD SUCCESSFUL in 3m 11s

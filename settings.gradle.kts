@@ -20,6 +20,8 @@ include(":fingerprint")
 include(":material-color-utilities")
 include(":ffMetadataEx")
 include(":taglib")
+// :ffMetadataEx, :taglib and :innertubex are vendored source trees in this fork, not Git
+// submodules. No `git submodule` command is needed to configure or build this project.
 
 // Use a local copy of NewPipe Extractor by uncommenting the lines below.
 // We assume, that OuterTune and NewPipe Extractor have the same parent directory.

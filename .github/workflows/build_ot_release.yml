@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: recursive
+      # No submodule checkout: ffMetadataEx, taglib and innertubex are vendored source trees.
 
       - name: set up JDK 21
         uses: actions/setup-java@v4
@@ -38,7 +38,9 @@ jobs:
       - name: Build core release APK
         run: ./gradlew assembleCoreRelease
 
-      - name: Resolve ffmpeg libs
+      # FFmpeg binaries are an external native dependency of the vendored :ffMetadataEx module,
+      # not a Git submodule. They must be present before the `full` build.
+      - name: Resolve external FFmpeg native libraries
         run: git clone https://github.com/mikooomich/ffmpeg-android-maker-prebuilt/ -b audio ffMetadataEx/ffmpeg-android-maker
 
       - name: Build full release APK

@@ -3,7 +3,7 @@
 
 Some songs blare out much louder than the ones before them, even though you have not touched your phone volume. This page explains why that happens, what REVIBE does about it, and the button that repairs the songs it has no volume information for.
 
-The on/off switch itself came from OuterTune, but the way REVIBE levels songs, the repair button and the volume boost are all REVIBE's own work. Upstream OuterTune does not behave this way, so if something here goes wrong, report it on [REVIBE's issues](https://github.com/ItzSkyeYT/InterTune/issues) rather than to upstream.
+The on/off switch itself came from OuterTune, but the way REVIBE levels songs, the repair button and the volume boost are all REVIBE's own work. Upstream OuterTune does not behave this way, so if something here goes wrong, report it on [REVIBE's issues](https://github.com/revibe-music-code/REVIBE/issues) rather than to upstream.
 
 ## Why some songs are louder than others
 
@@ -76,4 +76,4 @@ Two things to watch for:
 - Run **Fix song volumes** and let it finish.
 - Check that **Audio normalization** is actually on.
 - If the loud song is a file on your phone, that is expected. Those are not levelled yet.
-- If a song still stands out after all of that, open the player, tap the three dots, then **Details**, and note down the **Media id** and **Loudness** values. Those two lines are what makes a report on [REVIBE's issues](https://github.com/ItzSkyeYT/InterTune/issues) useful.
+- If a song still stands out after all of that, open the player, tap the three dots, then **Details**, and note down the **Media id** and **Loudness** values. Those two lines are what makes a report on [REVIBE's issues](https://github.com/revibe-music-code/REVIBE/issues) useful.

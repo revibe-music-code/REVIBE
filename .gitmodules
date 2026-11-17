@@ -1,9 +1,8 @@
-[submodule "ffMetadataEx"]
-	path = ffMetadataEx
-	url = https://github.com/OuterTune/ffMetadataEx
-[submodule "taglib"]
-	path = taglib
-	url = https://github.com/OuterTune/taglib
-[submodule "innertubex"]
-	path = innertubex
-	url = https://github.com/MetrolistGroup/innertubex
+# REVIBE vendors ffMetadataEx, taglib and innertubex as regular source trees in this fork.
+# There are no Git submodules in this repository: `git submodule update` is a no-op and no
+# gitlink is expected for these paths. The origins below are provenance only, not checkout
+# instructions. Upstream origins are also recorded in NOTICE.md and in each vendored
+# README/LICENSE.
+#   ffMetadataEx - https://github.com/OuterTune/ffMetadataEx
+#   taglib       - https://github.com/OuterTune/taglib (TagLib: https://github.com/taglib/taglib.git)
+#   innertubex   - https://github.com/MetrolistGroup/innertubex

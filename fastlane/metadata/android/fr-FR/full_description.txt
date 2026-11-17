@@ -36,7 +36,7 @@
 <b>Remarques :</b></p>
 <ul>
 <li>Android 7.0 ou version ultérieure requis.</li>
-<li>Un problème ? Veuillez le signaler depuis l'application (Paramètres, À propos, Envoyer un rapport de bogue) ou sur <a href="https://github.com/ItzSkyeYT/InterTune/issues">GitHub</a>.</li>
+<li>Un problème ? Veuillez le signaler depuis l'application (Paramètres, À propos, Envoyer un rapport de bogue) ou sur <a href="https://github.com/revibe-music-code/REVIBE/issues">GitHub</a>.</li>
 </ul>
 <p>
 REVIBE n'est ni affilié, ni sponsorisé, ni approuvé par Google ou YouTube.</p>

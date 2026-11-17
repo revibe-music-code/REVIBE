@@ -1,3 +1,7 @@
+# Modelo herdado do fork InterTune (o nome deste arquivo é o antigo).
+# applicationId real: app.revibe.music. Ao submeter ao fdroiddata, use
+# metadata/app.revibe.music.yml. Credenciais são placeholders públicos;
+# valores reais ficam apenas em local.properties (ignorado) ou variantes de build.
 AntiFeatures:
   NonFreeNet:
     en-US: Playing anything from YouTube Music depends on YouTube Music.
@@ -7,17 +11,18 @@ Categories:
 License: GPL-3.0-only
 AuthorName: Mel Boro
 AuthorEmail: pacific-kindly66@bravealias.com
-SourceCode: https://github.com/ItzSkyeYT/InterTune
-IssueTracker: https://github.com/ItzSkyeYT/InterTune/issues
-Changelog: https://github.com/ItzSkyeYT/InterTune/releases
+SourceCode: https://github.com/revibe-music-code/REVIBE
+IssueTracker: https://github.com/revibe-music-code/REVIBE/issues
+Changelog: https://github.com/revibe-music-code/REVIBE/releases
 
-AutoName: InterTune
+AutoName: REVIBE
 
 RepoType: git
-Repo: https://github.com/ItzSkyeYT/InterTune
+Repo: https://github.com/revibe-music-code/REVIBE
 Binaries: 
-  https://github.com/ItzSkyeYT/InterTune/releases/download/v%v/InterTune-%v-core-release-%c.apk
+  https://github.com/revibe-music-code/REVIBE/releases/download/v%v/REVIBE-%v-core-release-%c.apk
 
+# Registro de build herdado da config antiga; revisar antes de submeter.
 Builds:
   - versionName: 0.10.9.1
     versionCode: 88
@@ -31,6 +36,7 @@ Builds:
       - taglib
     ndk: 29.0.13113456
 
+# Chave histórica do upstream; assinatura de release do REVIBE não validada nesta entrega.
 AllowedAPKSigningKeys: 69c6b5fbf1220a44206e8a3a098f41c78af7f94d2fa56eb3165ca40b9199a2a7
 
 AutoUpdateMode: Version

@@ -102,4 +102,4 @@ If you want to build the app yourself, or with your own set of FFmpeg libraries,
 
 ---
 
-Something not behaving as described here? Open an issue at [ItzSkyeYT/REVIBE](https://github.com/ItzSkyeYT/InterTune/issues). This is a personal fork, so replies come on a hobby schedule.
+Something not behaving as described here? Open an issue at [ItzSkyeYT/REVIBE](https://github.com/revibe-music-code/REVIBE/issues). This is a personal fork, so replies come on a hobby schedule.

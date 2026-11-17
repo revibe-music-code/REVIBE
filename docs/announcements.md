@@ -120,10 +120,10 @@ A debug or preview build reads a poll document from the phone itself while there
 
 ```
 adb push polls.json /data/local/tmp/poll-stand-in.json
-adb shell run-as dev.skye.intertune.debug cp /data/local/tmp/poll-stand-in.json files/
+adb shell run-as app.revibe.music.debug cp /data/local/tmp/poll-stand-in.json files/
 ```
 
-With Questions on, the question shows at the next check (Settings, Questions and news, or the next start). While the file is there nothing is fetched and nothing is sent: an answer goes to the log instead (`adb logcat -s PollChecker`), so a test never lands among the real answers. Let me be asked again shows an answered question again. `adb shell run-as dev.skye.intertune.debug rm files/poll-stand-in.json` ends it. Releases never read it.
+With Questions on, the question shows at the next check (Settings, Questions and news, or the next start). While the file is there nothing is fetched and nothing is sent: an answer goes to the log instead (`adb logcat -s PollChecker`), so a test never lands among the real answers. Let me be asked again shows an answered question again. `adb shell run-as app.revibe.music.debug rm files/poll-stand-in.json` ends it. Releases never read it.
 
 ## Worth knowing
 

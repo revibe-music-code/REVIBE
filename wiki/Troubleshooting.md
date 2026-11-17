@@ -78,7 +78,7 @@ More on scanning is in [Local media](https://github.com/ItzSkyeYT/InterTune/wiki
 
 ## Reporting a bug
 
-Report it at **https://github.com/ItzSkyeYT/InterTune/issues**, or from inside the app at `Settings > About > Submit a bug report (Via GitHub)`, which opens the same page. For questions rather than bugs, `Settings > About > Help and support (Via GitHub)` opens the discussions page instead.
+Report it at **https://github.com/revibe-music-code/REVIBE/issues**, or from inside the app at `Settings > About > Submit a bug report (Via GitHub)`, which opens the same page. For questions rather than bugs, `Settings > About > Help and support (Via GitHub)` opens the discussions page instead.
 
 Please do not report REVIBE bugs to OuterTune. Upstream did not build this app and cannot fix it. If you can reproduce exactly the same thing on plain OuterTune, then it is genuinely their bug and belongs on [their tracker](https://github.com/OuterTune/OuterTune/issues) instead.
 

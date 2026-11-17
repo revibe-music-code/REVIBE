@@ -1,3 +1,4 @@
-[submodule "src/main/cpp/taglib"]
-	path = src/main/cpp/taglib
-	url = https://github.com/taglib/taglib.git
+# Historical record only: the TagLib source under src/main/cpp/taglib is vendored in this
+# fork (inside the vendored OuterTune taglib tree), not checked out as a Git submodule.
+# This file is kept for provenance; `git submodule update` is not needed here.
+# Upstream: https://github.com/taglib/taglib.git

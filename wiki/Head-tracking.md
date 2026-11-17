@@ -21,7 +21,7 @@ adb shell dumpsys sensorservice | grep -c dynamic_sensor_meta
 
 `0` means your phone cannot see external sensors at all, so head tracking is not possible on it and no app can change that.
 
-If your headphones definitely have head tracking and REVIBE still says otherwise, please [open an issue](https://github.com/ItzSkyeYT/InterTune/issues/new?labels=head+tracking). Include your headphones, your phone, your Android version, and the output of that command.
+If your headphones definitely have head tracking and REVIBE still says otherwise, please [open an issue](https://github.com/revibe-music-code/REVIBE/issues/new?labels=head+tracking). Include your headphones, your phone, your Android version, and the output of that command.
 
 ## Calibrate first
 

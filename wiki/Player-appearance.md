@@ -100,4 +100,4 @@ for more glass and getting less.
 Liquid glass, the intensity slider and the grouped buttons are REVIBE's own. Upstream
 [OuterTune](https://github.com/OuterTune/OuterTune) does not have them, so do not report problems
 with them there. If something here is wrong or missing, open an issue at
-[REVIBE](https://github.com/ItzSkyeYT/InterTune/issues).
+[REVIBE](https://github.com/revibe-music-code/REVIBE/issues).

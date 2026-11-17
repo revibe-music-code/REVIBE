@@ -71,4 +71,4 @@ Separate from everything above: once the window is really wide, roughly 840 dp a
 
 ---
 
-If something on a tablet looks wrong or a layout does not fit, report it at [REVIBE's issues](https://github.com/ItzSkyeYT/InterTune/issues). Please say which device you are on and whether Force tablet UI was switched on.
+If something on a tablet looks wrong or a layout does not fit, report it at [REVIBE's issues](https://github.com/revibe-music-code/REVIBE/issues). Please say which device you are on and whether Force tablet UI was switched on.

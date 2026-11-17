@@ -1,6 +1,6 @@
 # Code of conduct
 
-REVIBE is made in people's free time and used all over the world. This page says how we treat each other wherever the project lives: here on GitHub, on the Discord server, on Weblate, and in anything sent through intertune.app.
+REVIBE is made in people's free time and used all over the world. This page says how we treat each other wherever the project lives: here on GitHub, in the REVIBE contact channels (`suporte.revibe@gmail.com / Discord: https://discord.gg/b9ybveZRs7`), and in anything sent through `https://revibe-music.base44.app`.
 
 ## Be kind
 
@@ -18,7 +18,7 @@ REVIBE is made in people's free time and used all over the world. This page says
 
 ## Reporting a problem
 
-If someone breaks these rules, send a direct message to a moderator on Discord, or write to intertune.dev@gmail.com. Reports are read only by the maintainer and the moderators, and stay private. Nobody gets in trouble for a report made in good faith.
+If someone breaks these rules, send a direct message to a moderator, or write to `suporte.revibe@gmail.com / Discord: https://discord.gg/b9ybveZRs7`. Reports are read only by the maintainer and the moderators, and stay private. Nobody gets in trouble for a report made in good faith. The e-mail of the original project is not a REVIBE contact channel.
 
 ## What happens next
 

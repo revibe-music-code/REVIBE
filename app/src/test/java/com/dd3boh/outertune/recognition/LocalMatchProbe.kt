@@ -14,45 +14,57 @@ import org.junit.Test
 import java.io.File
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.nio.file.Files
 import kotlin.random.Random
 
 /**
- * Whether the room's audio can be checked against a candidate recording on the phone, with no
- * Shazam in between: the "compare it to the actual recording" idea of 24 Sep, for telling which of
- * several uploads is the one playing.
+ * Whether room audio can be checked against a candidate recording on the phone, with no Shazam in
+ * between: the "compare it to the actual recording" idea of 24 Sep, for telling which of several
+ * uploads is the one playing.
  *
  * The app's fingerprints are Shazam's peaks: a time, a frequency and a magnitude per peak. Pairs of
  * nearby peaks make hashes that survive noise, and a window from the same recording lines its
  * hashes up at one time offset against the recording's, where another recording's scatter. That is
- * Wang's 2003 method, the one Shazam itself grew from. This measures, on files from this machine,
- * how far apart the same recording and a different one score.
+ * Wang's 2003 method, the one Shazam itself grew from. This measures, on deterministic synthetic
+ * fixtures (or on a directory supplied by the caller), how far apart the same recording and a
+ * different one score.
  *
- * Measured 25 Sep, as how far the best offset stands out from the next: the same recording 1.7x
- * to 41x, 4.4x through a simulated room with noise, and always at the right place to 0.1 s; other
- * songs 1.0x to 1.5x; the same recording 2 % and 4 % faster, as a version at another tempo would
- * be, 1.1x and 1.3x. So it can tell the upload that is playing from another version of the song.
- * Weakest: a quiet stretch of How Deep Is Your Love at 1.7x, near the other songs' ceiling, which
- * two windows agreeing on one offset would settle.
+ * Historic measurements from 25 Sep, on a local library that is not committed here, found the best
+ * offset standing out by 1.7x to 41x for the same recording, 4.4x through simulated room noise, and
+ * at the right place to 0.1 s; other recordings scored 1.0x to 1.5x, and 2 %/4 % tempo variants
+ * scored 1.1x and 1.3x. The weakest case was a quiet passage landing near the ceiling of the other
+ * recordings, which two windows agreeing on one offset would settle. The numbers are historical
+ * context only; this fixture-based probe reports fresh scores for the current generator.
  *
- * Skipped unless LOCAL_MATCH=1, since it reads music from disk.
+ * No personal library paths or real track names are stored here. By default, deterministic WAV
+ * fixtures are generated in a temporary directory. To use your own local files instead, set
+ * LOCAL_MATCH_DIR to a directory containing the six WAV files named in [fixtureNames].
+ *
+ * Skipped unless LOCAL_MATCH=1, since it reads/decodes audio and invokes ffmpeg.
  *
  *     LOCAL_MATCH=1 ./gradlew :app:testCoreDebugUnitTest --tests "*LocalMatchProbe*" -i
  */
 class LocalMatchProbe {
 
-    private val dir = File(System.getProperty("user.home"), "Downloads/240gig_Backup/10_trash_recovered/files")
+    private val dir: File by lazy {
+        System.getenv("LOCAL_MATCH_DIR")?.let(::File) ?: createSyntheticFixtures()
+    }
 
     @Test
     fun probe() {
         assumeTrue(System.getenv("LOCAL_MATCH") == "1")
-        val hello = decode(File(dir, "Adele - Hello (Radio Edit).mp3"))
-        val helloOther = decode(File(dir, "Adele - Hello (Radio Edit).2.mp3"))
-        val deep = decode(File(dir, "Calvin Harris & Disciples - How Deep Is Your Love.mp3"))
-        val deepEdit = decode(File(dir, "Calvin Harris & Disciples - How Deep Is Your Love (Radio Edit).mp3"))
-        val lean = decode(File(dir, "Major Lazer And Dj Snake - Lean on (Averez Remix).mp3"))
-        val cheer = decode(File(dir, "OMI - Cheerleader (Felix Jaehn Remix Radio Edit).mp3"))
-        val references = listOf("Hello" to hello, "How Deep (album)" to deep, "Lean On (Averez)" to lean, "Cheerleader" to cheer)
-            .map { (name, audio) -> name to Index(SignatureGenerator.makeSignature(audio)) }
+        val referenceA = decode(File(dir, "reference-a.wav"))
+        val referenceARip = decode(File(dir, "reference-a-rip.wav"))
+        val referenceB = decode(File(dir, "reference-b.wav"))
+        val referenceBEdit = decode(File(dir, "reference-b-edit.wav"))
+        val referenceC = decode(File(dir, "reference-c.wav"))
+        val referenceD = decode(File(dir, "reference-d.wav"))
+        val references = listOf(
+            "Reference A" to referenceA,
+            "Reference B" to referenceB,
+            "Reference C" to referenceC,
+            "Reference D" to referenceD,
+        ).map { (name, audio) -> name to Index(SignatureGenerator.makeSignature(audio)) }
 
         fun room(name: String, audio: ShortArray, fromS: Int, noiseDb: Double = -12.0) {
             val window = noisy(audio.copyOfRange(fromS * SIGNATURE_SAMPLE_RATE_HZ, (fromS + 12) * SIGNATURE_SAMPLE_RATE_HZ), noiseDb)
@@ -63,20 +75,20 @@ class LocalMatchProbe {
             }
             println("LOCAL %-44s %s".format("$name @$fromS s", line))
         }
-        room("Hello, another rip", helloOther, 60)
-        room("Hello, another rip", helloOther, 150)
-        room("Hello, another rip, louder room", helloOther, 150, noiseDb = -3.0)
-        room("How Deep radio edit", deepEdit, 20)
-        room("How Deep radio edit", deepEdit, 100)
-        room("How Deep radio edit", deepEdit, 160)
-        room("Lean On (Averez)", lean, 90)
-        room("Cheerleader", cheer, 45)
-        room("Hello through a room", room(helloOther), 60)
-        room("Hello through a room, noisy", room(helloOther), 60, noiseDb = -6.0)
-        room("Lean On through a room, noisy", room(lean), 90, noiseDb = -6.0)
-        room("How Deep edit through a room, noisy", room(deepEdit), 100, noiseDb = -6.0)
-        room("Hello 4% faster (another version)", tempo(helloOther, 1.04), 60)
-        room("Hello 2% faster", tempo(helloOther, 1.02), 60)
+        room("A, another rip", referenceARip, 8)
+        room("A, another rip", referenceARip, 20)
+        room("A, another rip, louder room", referenceARip, 20, noiseDb = -3.0)
+        room("B edit", referenceBEdit, 4)
+        room("B edit", referenceBEdit, 14)
+        room("B edit", referenceBEdit, 24)
+        room("C", referenceC, 12)
+        room("D", referenceD, 8)
+        room("A through a room", room(referenceARip), 8)
+        room("A through a room, noisy", room(referenceARip), 8, noiseDb = -6.0)
+        room("C through a room, noisy", room(referenceC), 12, noiseDb = -6.0)
+        room("B edit through a room, noisy", room(referenceBEdit), 14, noiseDb = -6.0)
+        room("A 4% faster (another version)", tempo(referenceARip, 1.04), 8)
+        room("A 2% faster", tempo(referenceARip, 1.02), 8)
     }
 
     class Match(val score: Double, val offsetS: Double)
@@ -107,6 +119,85 @@ class LocalMatchProbe {
     companion object {
         /** One pass of the generator: 128 samples at 16 kHz. */
         const val PASS_S = 128.0 / SIGNATURE_SAMPLE_RATE_HZ
+
+        /** Names expected in LOCAL_MATCH_DIR, and created by the synthetic fallback. */
+        val fixtureNames = listOf(
+            "reference-a.wav",
+            "reference-a-rip.wav",
+            "reference-b.wav",
+            "reference-b-edit.wav",
+            "reference-c.wav",
+            "reference-d.wav",
+        )
+
+        private const val FIXTURE_SECONDS = 48
+
+        /**
+         * Deterministic, self-contained fixtures. No real music, backup paths or device-specific
+         * data are embedded; the same seeds produce the same WAVs on every machine.
+         */
+        private fun createSyntheticFixtures(): File {
+            val dir = Files.createTempDirectory("revibe-local-match-").toFile()
+            dir.deleteOnExit()
+            val fixtures = listOf(
+                Triple("reference-a.wav", 7, 0.000),
+                Triple("reference-a-rip.wav", 7, 0.002),
+                Triple("reference-b.wav", 19, 0.000),
+                Triple("reference-b-edit.wav", 19, 0.003),
+                Triple("reference-c.wav", 31, 0.000),
+                Triple("reference-d.wav", 43, 0.000),
+            )
+            fixtures.forEach { (name, seed, detune) ->
+                val file = File(dir, name)
+                writeWav(file, syntheticTrack(seed, detune, trimStartS = if (name == "reference-b-edit.wav") 4 else 0))
+                file.deleteOnExit()
+            }
+            return dir
+        }
+
+        private fun syntheticTrack(
+            seed: Int,
+            detune: Double,
+            trimStartS: Int,
+            noiseLevel: Double = 0.06,
+        ): ShortArray {
+            val random = Random(seed)
+            val phases = DoubleArray(5) { random.nextDouble() * 2 * Math.PI }
+            val bases = doubleArrayOf(110.0, 220.0, 330.0, 550.0, 880.0)
+            val length = FIXTURE_SECONDS * SIGNATURE_SAMPLE_RATE_HZ
+            val startSample = trimStartS * SIGNATURE_SAMPLE_RATE_HZ
+            return ShortArray(length) { i ->
+                val t = (startSample + i).toDouble() / SIGNATURE_SAMPLE_RATE_HZ
+                var value = 0.0
+                for (k in bases.indices) {
+                    val f = bases[k] * (1.0 + detune + 0.02 * kotlin.math.sin(t * (0.07 + 0.013 * k) + k))
+                    value += kotlin.math.sin(2 * Math.PI * f * t + phases[k]) * (0.5 / (k + 1))
+                }
+                val envelope = 0.6 + 0.4 * kotlin.math.sin(2 * Math.PI * 0.13 * t + seed)
+                val noise = (random.nextDouble() - 0.5) * noiseLevel
+                ((value * envelope + noise) * 12000).coerceIn(-32768.0, 32767.0).toInt().toShort()
+            }
+        }
+
+        private fun writeWav(file: File, samples: ShortArray) {
+            val dataSize = samples.size * 2
+            val buffer = ByteBuffer.allocate(44 + dataSize).order(ByteOrder.LITTLE_ENDIAN)
+            fun ascii(value: String) = buffer.put(value.toByteArray(Charsets.US_ASCII))
+            ascii("RIFF")
+            buffer.putInt(36 + dataSize)
+            ascii("WAVEfmt ")
+            buffer.putInt(16)
+            buffer.putShort(1)
+            buffer.putShort(1)
+            buffer.putInt(SIGNATURE_SAMPLE_RATE_HZ)
+            buffer.putInt(SIGNATURE_SAMPLE_RATE_HZ * 2)
+            buffer.putShort(2)
+            buffer.putShort(16)
+            ascii("data")
+            buffer.putInt(dataSize)
+            samples.forEach(buffer::putShort)
+            Files.write(file.toPath(), buffer.array())
+        }
 
         /**
          * Anchor and target peaks: frequency in pairs of bins (15.6 Hz), a target up to 0.8 s after

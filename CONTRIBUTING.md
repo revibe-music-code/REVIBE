@@ -1,20 +1,14 @@
 # Building
 
-Building needs JDK 21. From a clone with its submodules (taglib, and ffMetadataEx for the full flavour) to an app:
+Building needs JDK 21. `ffMetadataEx`, `taglib` and `innertubex` are vendored source trees in this repository, so no submodule bootstrap is needed:
 
 ```bash
-git clone --recurse-submodules https://github.com/ItzSkyeYT/InterTune.git
+git clone https://github.com/revibe-music-code/REVIBE REVIBE
 cd REVIBE
 ./gradlew assembleCoreDebug
 ```
 
-The APK is then in `app/build/outputs/apk/core/debug/`. Android Studio opens the folder as it is and builds the same way.
-
-On a clone made without the submodules, or when a build fails in one of them, fetch them again:
-
-```bash
-git submodule update --init --recursive
-```
+The APK is then in `app/build/outputs/apk/core/debug/`. Android Studio opens the folder as it is and builds the same way. Do not run `git submodule update --init --recursive`: there are no gitlinks to populate.
 
 The app runs on Android 7.0 and newer.
 
@@ -22,14 +16,14 @@ The app runs on Android 7.0 and newer.
 
 | Flavour | What it is |
 |---|---|
-| `core` | The default, and what every release is |
-| `full` | Core plus FFmpeg: a tag reader for local files and more audio decoders. Larger, and it needs [extra setup](https://github.com/OuterTune/ffMetadataEx/blob/main/README.md#building) |
+| `core` | The default flavour, without FFmpeg |
+| `full` | Core plus FFmpeg: a tag reader for local files and more audio decoders. Larger, and it needs [extra setup](../ffMetadataEx/README.md#building) |
 
 | Build type | Installs as | For |
 |---|---|---|
-| `debug` | `dev.skye.REVIBE.debug` | Everyday work, with the features that are still in progress switched on |
-| `preview` | `dev.skye.REVIBE.preview` | The same, installed beside a debug build, to try something on a fresh profile |
-| `release` | `dev.skye.REVIBE` | Releases: shrunk, and signed only where the signing key is |
+| `debug` | `app.revibe.music.debug` | Everyday work, with the features that are still in progress switched on |
+| `preview` | `app.revibe.music.preview` | The same, installed beside a debug build, to try something on a fresh profile |
+| `release` | `app.revibe.music` | Releases: shrunk, and signed only where the signing key is |
 
 Debug and preview builds install next to the released app, so they never touch the library in it.
 
@@ -37,33 +31,34 @@ Debug and preview builds install next to the released app, so they never touch t
 
 # Contributing to REVIBE
 
-These guidelines are inherited from OuterTune and still describe how this fork works. Where an
-example below links to an OuterTune commit or pull request, it is upstream's, kept because it
-illustrates the convention rather than because it happened here.
+These guidelines are inherited from OuterTune through InterTune (base directly derived from
+InterTune, which comes from InnerTune/OuterTune) and still describe how this fork works. Where an
+example below links to an OuterTune commit or pull request, it is upstream's, kept as a reference
+because it illustrates the convention rather than because it happened here. Upstream projects are
+credited as the base, not as REVIBE's support channel.
 
 ## Reporting issues
 
-Found something broken? Open an [issue](https://github.com/ItzSkyeYT/InterTune/issues/new/choose) with the bug form, or post in #bug-reports on the [Discord server](https://discord.gg/68jmqhMjXk). In the app, Settings > About > Submit a bug report shows the last thing that went wrong, ready to copy into the report.
+Found something broken? Open an [issue](https://github.com/revibe-music-code/REVIBE/issues/new/choose) **in this REVIBE repository** with the bug form, or use the REVIBE contact channel (`suporte.revibe@gmail.com / Discord: https://discord.gg/b9ybveZRs7`). In the app, Settings > About > Submit a bug report shows the last thing that went wrong, ready to copy into the report. Reports sent to the original projects are not REVIBE support requests.
 
-Everyone who reports issues is thanked in the [README](https://github.com/ItzSkyeYT/InterTune#people). Thank you!
+Everyone who reports issues is thanked in the [README](https://github.com/revibe-music-code/REVIBE#people). Thank you!
 
 ## Translations
 
-We use Weblate. Thank you for the libre tier.
+The existing translation files are preserved. REVIBE does not yet have its own translation
+platform, so translation contributions will be made available in the future. Until then, there is
+no REVIBE Weblate link to use; please do not follow links from older documentation.
 
-There are two string files and they are translated in two different places, because only one of
-them belongs to this fork.
+There are two string files, and only one of them belongs to this fork:
 
-- `strings-ot.xml` is REVIBE's own, and by far the larger of the two. It is translated on
-  [our Weblate page](https://hosted.weblate.org/projects/intertune/).
-- `strings.xml` comes from OuterTune and is translated on
-  [their Weblate page](https://hosted.weblate.org/projects/outertune/). It reaches this repository
-  through upstream merges, so translating it here would mean a merge and a sync writing over each
-  other every time.
+- `strings-ot.xml` is REVIBE's own, and by far the larger of the two.
+- `strings.xml` comes from OuterTune and reaches this repository through upstream merges, so
+  translating it here would mean a merge and a sync writing over each other every time.
+
+Pull requests editing the existing resource files are welcome in the meantime.
 
 ### Important
 
-- Submit translations through Weblate. If something cannot be done there, a pull request is fine
 - New strings go in `strings-ot.xml`. Strings ported from upstream go in `strings.xml`
 - `values-en-rCA` is not a translation. It is English, and it is what en-GB and en-AU devices read
   **ahead of** `values/`, so any edit to an English string has to touch both files or those
@@ -102,8 +97,8 @@ To make everyone's life easier, there are a set of guidelines that are to be fol
   are in the `Database schema changes` section
 - For multi-part commits where all parts are required for functionality, use
   `[1/2], [2/2], etc`. [See example](https://github.com/OuterTune/OuterTune/pull/59/commits)
-- Do not mess with translation files directly. `strings-ot.xml` is managed on our Weblate and
-  `strings.xml` on upstream's.
+- Until a REVIBE translation platform is available, translation changes should be proposed as pull
+  requests. New REVIBE strings go in `strings-ot.xml`; `strings.xml` follows upstream.
 
 ### Tags
 

@@ -1,7 +1,7 @@
 # REVIBE — Relatório de auditoria de marca
 
 **Data:** 17 de novembro de 2026
-**Projeto auditado:** `C:\Users\Hugo Artur\AppData\Local\Temp\opencode\revibe-analysis\REVIBE`
+**Projeto auditado:** `<REPO_ROOT>`
 **Objetivo:** substituir referências visuais e textuais das marcas anteriores (`InterTune`, `InerTune`, `InnerTune`, `OuterTune` e variações) por **REVIBE**, preservando créditos, licenças, atribuições, links oficiais e funcionalidade.
 
 ---
@@ -167,7 +167,7 @@ Classificação individual das **71 linhas de código não-comentário** restant
 ## 7. Compilação e validação
 
 ```text
-$env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-21.0.13.9-hotspot'
+$env:JAVA_HOME = '<JAVA_HOME>'
 .\gradlew.bat :app:assembleCoreDebug --no-daemon --max-workers=2 -DskipFormatKtlint
 
 BUILD SUCCESSFUL in 2m 44s

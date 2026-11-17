@@ -1,4 +1,4 @@
-name: Build debug APK
+name: Build core debug APK
 on:
   workflow_dispatch:
   push:
@@ -15,7 +15,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: recursive
+      # No submodule checkout: ffMetadataEx, taglib and innertubex are vendored source trees.
+      # This job builds only `core`, so no external FFmpeg binaries are needed.
 
       - name: set up JDK 21
         uses: actions/setup-java@v4
@@ -27,7 +28,7 @@ jobs:
       - name: Accept SDK licenses
         run: yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses
 
-      - name: Build debug APK and run jvm tests
+      - name: Build core debug APK and run jvm tests
         run: ./gradlew assembleCoreDebug lintCoreDebug testCoreDebugUnitTest --stacktrace -DskipFormatKtlint
 
       - name: Upload APK

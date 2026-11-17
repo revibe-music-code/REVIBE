@@ -22,15 +22,13 @@ if (keystorePropertiesFile.exists()) {
 }
 
 /**
- * Credentials for the maintainer's services: the Last.fm API account and the polls' gist and Umami
- * site.
+ * Optional credentials for Last.fm and the polls' gist/Umami site.
  *
- * In services.properties, which is committed. They used to live in the gitignored local.properties,
- * and that made a reproducible F-Droid build impossible: a build from source could never contain
- * what the published APK did. They only work in the app signed with the release key, see
- * BuiltInKeys.kt. local.properties is still read as a fallback, for a checkout whose
- * services.properties has not been filled in. Absent is a supported state: the build works, and
- * the features hide themselves rather than offering what cannot succeed.
+ * services.properties is committed as a TEMPLATE with EMPTY values; REVIBE does not publish private
+ * credentials. Real values belong in local.properties, which is gitignored. service() below skips
+ * blank template values and falls back to local.properties, so a clean clone builds with the
+ * integrations silently disabled, while a local build can still enable them exactly as before.
+ * BuiltInKeys.kt still applies the upstream signature check to any supplied value.
  */
 val servicesProperties = Properties()
 rootProject.file("services.properties").takeIf { it.exists() }?.let { file ->
@@ -62,9 +60,9 @@ android {
         // harvested in bulk. Someone reading the code still gets them in a minute.
         //
         // The only real fix is a server relaying the calls, which this app does not have. A leaked
-        // Last.fm key costs a rate limit, not an account, and is revocable, so this is the right
-        // amount of effort for what is at stake. The values are in the public source now, for
-        // reproducible builds, and what keeps them to this app is BuiltInKeys' signature check.
+        // Last.fm key costs a rate limit, not an account, and is revocable. REVIBE keeps real values
+        // out of the public repository; the committed template is empty and local.properties is the
+        // supported place to supply them for a personal build.
         fun obfuscated(value: String): String {
             // An empty int array, not an empty string. These fields are declared int[], so
             // returning "\"\"" emitted `public static final int[] X = "";` and the whole app
@@ -90,9 +88,9 @@ android {
             obfuscated(service("lastfm.apiSecret"))
         )
 
-        // Polls, same treatment and the same honesty about it. None of these is a secret, but the
-        // Umami website id lets anyone post events to that site, and the gist url is a maintainer
-        // address that does not need to be handed out in a grep.
+        // Polls, same treatment and the same honesty about it. The Umami website id lets anyone
+        // post events to that site, and the gist url is a maintainer address, so both stay out of
+        // the public template. Empty values are a supported off state, not a broken build.
         buildConfigField(
             "int[]",
             "POLLS_URL",

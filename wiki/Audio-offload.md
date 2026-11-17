@@ -49,4 +49,4 @@ These are limits of the phone, not things REVIBE can patch around. If offload mi
 
 ## Reporting a problem
 
-Offload bugs are almost always specific to one phone, so a report without details is not much use. If you open an issue at [REVIBE's issue tracker](https://github.com/ItzSkyeYT/InterTune/issues), please say which phone and Android version you are on, whether "Gapless offload" was on, and whether the same song plays fine with offload switched off.
+Offload bugs are almost always specific to one phone, so a report without details is not much use. If you open an issue at [REVIBE's issue tracker](https://github.com/revibe-music-code/REVIBE/issues), please say which phone and Android version you are on, whether "Gapless offload" was on, and whether the same song plays fine with offload switched off.

@@ -18,11 +18,11 @@ Configuração Android herdada: `namespace=com.dd3boh.outertune`, `applicationId
 4. **Busca — resultados:** há estado de falha/retry na primeira página e na continuação; pedidos `loadMore` concorrentes são bloqueados por filtro até a conclusão da chamada em andamento. O tratamento usa os tipos de erro existentes do app (`WhyStopped`).
 5. **Integração Android:** applicationId alterado para `app.revibe.music`; authorities da busca do sistema conferidas para release/debug/preview; ações dos atalhos de downloads e reconhecimento namespaced sob `app.revibe.music.action.*`; teste de authority atualizado.
 6. **Créditos:** a tela Sobre acrescenta “Agradecimentos aos criadores do InterTune”, nomes identificados na base e links para o repositório oficial e para a licença. Os nomes e links são os que constam na documentação upstream.
-7. **Fontes de submódulos:** o ZIP recebido tinha as pastas `ffMetadataEx` e `taglib` vazias e não continha `innertubex`. Foram recuperadas do checkout upstream identificado pelo comentário do ZIP (commit `a3015d9d831abdb8f1165d715eb39e7ddf7b9eab`), sem copiar metadados `.git`:
+7. **Fontes vendored (antigos submódulos):** o ZIP recebido tinha as pastas `ffMetadataEx` e `taglib` vazias e não continha `innertubex`. Foram recuperadas do checkout upstream identificado pelo comentário do ZIP (commit `a3015d9d831abdb8f1165d715eb39e7ddf7b9eab`), sem copiar metadados `.git`. Hoje esses fontes estão incluídos como código vendored no repositório REVIBE (árvores de código comuns, não submódulos Git): não há gitlinks para popular e `git submodule update --init --recursive` não é necessário nem aplicável. Os hashes abaixo são histórico de origem upstream, não estado de checkout:
    - `ffMetadataEx`: `5374cd8b5eaf603c09ea8199aaf11311a3e60254`
    - `innertubex`: `b5f8b6f1bc2b73ee9e3f3ac95b7eaa255368864e`
    - `taglib`: `abf4cb2e421ff8ca2c97ae899f8dd915e91b5771`
-   - submódulos recursivos de `taglib`: TagLib `7d86716194777e0294453bfdc9dd170bd033e1f4`, utfcpp `df857efc5bbc2aa84012d865f7d7e9cccdc08562`, ftest `c4ad4af0946b73ce1a40cbc72205d15d196c7e06`.
+   - fontes TagLib aninhados (antes submódulos recursivos de `taglib`): TagLib `7d86716194777e0294453bfdc9dd170bd033e1f4`, utfcpp `df857efc5bbc2aa84012d865f7d7e9cccdc08562`, ftest `c4ad4af0946b73ce1a40cbc72205d15d196c7e06`.
 
 ## Busca e reprodução: o que se pode afirmar
 
@@ -47,9 +47,14 @@ A redistribuição de binários deve observar a GPL-3.0 e a disponibilização d
 
 ## Build e signing
 
-Requisitos indicados pela configuração/documentação herdada: JDK 21, Android SDK `platforms;android-36`, NDK `29.0.13113456`, CMake `3.31.6` e licenças do SDK aceitas. Variantes incluem `core`/`full` e build types `debug`, `release` e `userdebug`; confira `app/build.gradle.kts` antes de escolher uma variante. Com clone Git, inicialize submódulos recursivamente (`git submodule update --init --recursive`). O ZIP entregue nesta sessão já inclui os diretórios de fontes recuperados, porém sem metadados Git.
+Os fontes de `ffMetadataEx`, `taglib` e `innertubex` são vendored neste repositório: não há submódulos Git para inicializar. A distinção entre as variantes é a dependência nativa de FFmpeg:
 
-Com SDK compatível:
+- `core`: JDK 21 como toolchain do Gradle (os módulos Kotlin declaram `jvmToolchain(17)`), Android SDK `platforms;android-36` e licenças aceitas. Não exige bibliotecas FFmpeg externas. O módulo nativo vendored `:taglib`, presente nas duas variantes, declara NDK `29.0.13113456` e CMake `3.31.6` em `taglib/build.gradle.kts`; portanto essas ferramentas também são necessárias para compilar `core`.
+- `full`: tudo o que `core` exige, mais `:ffMetadataEx` (JDK 21, NDK `29.0.13113456` e CMake `3.31.6`) e as bibliotecas nativas do FFmpeg em `ffMetadataEx/ffmpeg-android-maker/output/lib`. Esses binários são uma dependência externa, resolvida separadamente conforme o [README do ffMetadataEx](../ffMetadataEx/README.md#building); os workflows de release clonam `mikooomich/ffmpeg-android-maker-prebuilt` (branch `audio`) para `ffMetadataEx/ffmpeg-android-maker` antes do build `full`.
+
+Variantes incluem `core`/`full` e build types `debug`, `release`, `userdebug` e `preview`; confira `app/build.gradle.kts` antes de escolher uma variante. `CoreDebug` e `FullDebug` foram compilados com sucesso a partir de clone limpo simulado; `release`, `userdebug` e `preview` permanecem sem verificação de build nesta entrega. Detalhes em [TEST_REPORT.md](TEST_REPORT.md).
+
+Com SDK compatível, a variante `core` pode ser verificada com:
 
 ```bash
 ./gradlew :app:assembleCoreDebug

@@ -71,4 +71,4 @@ REVIBE does not create that file for you. Make it yourself with a file manager.
 
 ---
 
-Something on this page wrong or missing? Open an issue at [github.com/ItzSkyeYT/REVIBE/issues](https://github.com/ItzSkyeYT/InterTune/issues).
+Something on this page wrong or missing? Open an issue at [https://github.com/revibe-music-code/REVIBE/issues](https://github.com/revibe-music-code/REVIBE/issues).

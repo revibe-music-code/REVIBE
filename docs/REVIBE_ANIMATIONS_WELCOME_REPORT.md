@@ -100,7 +100,7 @@ Novo grupo dentro de **Aparência / Look and feel**, sem nova categoria:
 Comando:
 
 ```powershell
-$env:JAVA_HOME='C:\Program Files\Eclipse Adoptium\jdk-21.0.13.9-hotspot'
+$env:JAVA_HOME='<JAVA_HOME>'
 .\gradlew.bat :app:testCoreDebugUnitTest `
   --tests 'com.dd3boh.outertune.ui.screens.settings.SettingsIndexTest' `
   --tests 'com.dd3boh.outertune.ui.utils.AnimationsTest' `
@@ -121,7 +121,7 @@ Resultado: ✅ **BUILD SUCCESSFUL** — 19s
 
 ## 6. Validação em dispositivo
 
-Emulador: `Medium_Phone_API_37.0` (`emulator-5554`), Android API 37.  
+Emulador: `<ANDROID_AVD>` (conectado via `adb`), Android API 37.  
 Validação feita por hierarquia de acessibilidade (`uiautomator dump`), já que este modelo não interpreta imagens.
 
 ### Fluxo verificado
